@@ -16,6 +16,7 @@
 		EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */; };
 		EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */; };
 		EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */; };
+		EB378D6922A4D709008B90F6 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6822A4D709008B90F6 /* Media.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewController.swift; sourceTree = "<group>"; };
 		EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTabBarController.swift; sourceTree = "<group>"; };
+		EB378D6822A4D709008B90F6 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		EB378D5A22A4C862008B90F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB378D6822A4D709008B90F6 /* Media.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			files = (
 				EB378D6122A4CAEF008B90F6 /* MoviesTableViewController.swift in Sources */,
 				EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */,
+				EB378D6922A4D709008B90F6 /* Media.swift in Sources */,
 				EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */,
 				EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */,
 				EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */,

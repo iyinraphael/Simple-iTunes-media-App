@@ -22,12 +22,14 @@ struct Media: Codable {
         case artist = "artistName"
         case image = "artWorkUrl100"
         case mediaType = "kind"
+   
     }
+
 }
 
 
 struct Results: Decodable {
     
-    var results: [Media]
+    var results: Array<Media>
 
 }

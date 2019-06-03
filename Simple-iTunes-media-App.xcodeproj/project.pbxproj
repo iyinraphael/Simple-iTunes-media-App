@@ -11,6 +11,11 @@
 		EB378D4E22A4C664008B90F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB378D4C22A4C664008B90F6 /* Main.storyboard */; };
 		EB378D5022A4C668008B90F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB378D4F22A4C668008B90F6 /* Assets.xcassets */; };
 		EB378D5322A4C668008B90F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB378D5122A4C668008B90F6 /* LaunchScreen.storyboard */; };
+		EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */; };
+		EB378D6122A4CAEF008B90F6 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */; };
+		EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */; };
+		EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */; };
+		EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +25,11 @@
 		EB378D4F22A4C668008B90F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB378D5222A4C668008B90F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB378D5422A4C668008B90F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
+		EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
+		EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewController.swift; sourceTree = "<group>"; };
+		EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
+		EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +83,11 @@
 		EB378D5B22A4C86B008B90F6 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */,
+				EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */,
+				EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */,
+				EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */,
+				EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -164,6 +179,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB378D6122A4CAEF008B90F6 /* MoviesTableViewController.swift in Sources */,
+				EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */,
+				EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */,
+				EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */,
+				EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */,
 				EB378D4922A4C664008B90F6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

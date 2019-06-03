@@ -17,10 +17,10 @@ struct Media: Codable {
     
     
     enum CodingKeys: String, CodingKey {
-        
+
         case name = "name"
         case artist = "artistName"
-        case image = "artWorkUrl100"
+        case image = "artworkUrl100"
         case mediaType = "kind"
    
     }
@@ -30,6 +30,13 @@ struct Media: Codable {
 
 struct Results: Decodable {
     
-    var results: Array<Media>
+    var feed: feeds
+    
+    
+    struct feeds: Decodable {
+        
+        var results: [Media]
+    
+    }
 
 }

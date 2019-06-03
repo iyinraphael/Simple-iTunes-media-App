@@ -19,6 +19,7 @@
 		EB378D6922A4D709008B90F6 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6822A4D709008B90F6 /* Media.swift */; };
 		EB378D6B22A4DA57008B90F6 /* MediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6A22A4DA57008B90F6 /* MediaController.swift */; };
 		EB378D6D22A4DB0A008B90F6 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6C22A4DB0A008B90F6 /* Networking.swift */; };
+		EB378D7022A5D970008B90F6 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6F22A5D970008B90F6 /* Appearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		EB378D6822A4D709008B90F6 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		EB378D6A22A4DA57008B90F6 /* MediaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaController.swift; sourceTree = "<group>"; };
 		EB378D6C22A4DB0A008B90F6 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		EB378D6F22A5D970008B90F6 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		EB378D4722A4C664008B90F6 /* Simple-iTunes-media-App */ = {
 			isa = PBXGroup;
 			children = (
+				EB378D6E22A5D943008B90F6 /* Helper */,
 				EB378D5C22A4C883008B90F6 /* Model Controller  */,
 				EB378D5B22A4C86B008B90F6 /* View Controller */,
 				EB378D5A22A4C862008B90F6 /* Model */,
@@ -115,6 +118,14 @@
 				EB378D4822A4C664008B90F6 /* AppDelegate.swift */,
 			);
 			path = "Resourcese ";
+			sourceTree = "<group>";
+		};
+		EB378D6E22A5D943008B90F6 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				EB378D6F22A5D970008B90F6 /* Appearance.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +204,7 @@
 				EB378D6922A4D709008B90F6 /* Media.swift in Sources */,
 				EB378D6D22A4DB0A008B90F6 /* Networking.swift in Sources */,
 				EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */,
+				EB378D7022A5D970008B90F6 /* Appearance.swift in Sources */,
 				EB378D6B22A4DA57008B90F6 /* MediaController.swift in Sources */,
 				EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */,
 				EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */,

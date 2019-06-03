@@ -9,29 +9,38 @@
 import UIKit
 
 class MoviesTableViewController: UITableViewController {
+    
+    //MARK: - Property
+    
+    var reuseIdentifier = "tableCell"
+    let mediaController = MediaController()
+    var results: [Media] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        
+        mediaController.fetchMedia(mediaController.movieUrl) { (_, _) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
-
+    
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-       
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 0
+        return  mediaController.results.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? MoviesTableViewCell else {return UITableViewCell()}
+        let movie = mediaController.results[indexPath.row]
+        cell.movie = movie
 
         return cell
     }

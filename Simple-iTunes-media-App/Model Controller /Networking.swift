@@ -11,7 +11,7 @@ import Foundation
 
 extension MediaController {
     
-    private func fetchMedia(_ withUurl: URL, completion: @escaping completionHandler = {_, _ in }) {
+    func fetchMedia(_ withUurl: URL, completion: @escaping completionHandler = {_, _ in }) {
         
         URLSession.shared.dataTask(with: withUurl) { (data, _, error) in
             
@@ -29,8 +29,8 @@ extension MediaController {
             do {
                 
                 let jsonDecoder = JSONDecoder()
-                let results = try jsonDecoder.decode([Results].self, from: data)
-                self.results = results
+                let results = try jsonDecoder.decode(Results.self, from: data)
+                self.results = results.feed.results
                
                 completion(self.results, nil)
                 

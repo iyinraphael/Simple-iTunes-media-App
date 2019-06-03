@@ -8,10 +8,12 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+
 
 class MusicCollectionViewController: UICollectionViewController {
 
+    var reuseIdentifier = "collectionCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

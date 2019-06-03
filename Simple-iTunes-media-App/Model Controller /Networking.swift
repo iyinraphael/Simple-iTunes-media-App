@@ -16,7 +16,7 @@ extension MediaController {
         URLSession.shared.dataTask(with: withUurl) { (data, _, error) in
             
             if let error = error {
-                
+
                 NSLog("Could not fetch data from server \(error)")
             }
             
@@ -38,7 +38,6 @@ extension MediaController {
                 
                 NSLog("Error decoding JSON data: \(error)")
                 completion(nil, error)
-                
                 return
             }
         }.resume()

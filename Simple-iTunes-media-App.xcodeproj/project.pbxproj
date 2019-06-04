@@ -22,6 +22,7 @@
 		EB378D7022A5D970008B90F6 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6F22A5D970008B90F6 /* Appearance.swift */; };
 		EB378D7222A5E47F008B90F6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7122A5E47F008B90F6 /* Cache.swift */; };
 		EB378D7422A5E4DC008B90F6 /* Concorrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7322A5E4DC008B90F6 /* Concorrency.swift */; };
+		EB378D7622A5E648008B90F6 /* FetchImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7522A5E648008B90F6 /* FetchImageOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		EB378D6F22A5D970008B90F6 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		EB378D7122A5E47F008B90F6 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		EB378D7322A5E4DC008B90F6 /* Concorrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concorrency.swift; sourceTree = "<group>"; };
+		EB378D7522A5E648008B90F6 /* FetchImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				EB378D6F22A5D970008B90F6 /* Appearance.swift */,
 				EB378D7122A5E47F008B90F6 /* Cache.swift */,
 				EB378D7322A5E4DC008B90F6 /* Concorrency.swift */,
+				EB378D7522A5E648008B90F6 /* FetchImageOperation.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				EB378D7422A5E4DC008B90F6 /* Concorrency.swift in Sources */,
 				EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */,
 				EB378D7022A5D970008B90F6 /* Appearance.swift in Sources */,
+				EB378D7622A5E648008B90F6 /* FetchImageOperation.swift in Sources */,
 				EB378D6B22A4DA57008B90F6 /* MediaController.swift in Sources */,
 				EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */,
 				EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */,

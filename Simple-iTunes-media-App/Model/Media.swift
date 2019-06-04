@@ -14,6 +14,7 @@ struct Media: Codable {
     let artist: String
     let image: String
     let mediaType: String
+    let identifier: String
     
     
     enum CodingKeys: String, CodingKey {
@@ -22,6 +23,7 @@ struct Media: Codable {
         case artist = "artistName"
         case image = "artworkUrl100"
         case mediaType = "kind"
+        case identifier = "id"
    
     }
 

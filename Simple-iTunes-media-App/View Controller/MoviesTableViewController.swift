@@ -15,7 +15,11 @@ class MoviesTableViewController: UITableViewController {
     var reuseIdentifier = "tableCell"
     let mediaController = MediaController()
     var results: [Media] = []
-
+    private let cache = Cache<Int, UIImage>()
+    private var operations = [Int : Operation]()
+    private let imageFetchQueue = OperationQueue()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,21 +34,54 @@ class MoviesTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return  mediaController.results.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? MoviesTableViewCell else {return UITableViewCell()}
-        let movie = mediaController.results[indexPath.row]
-        cell.movie = movie
+        
+        loadImage(forCell: cell, forItemAt: indexPath)
 
         return cell
     }
     
+    //MARK: - Cache and Concurrency(NSOperation)
+    private func loadImage(forCell cell: MoviesTableViewCell, forItemAt indexPath: IndexPath) {
+        let media = mediaController.results[indexPath.item]
+    
+        guard let id = Int(media.identifier) else {return}
+        if let cachedImage = cache.value(for: id as Int) {
+            cell.movieImage.image = cachedImage
+            return
+        }
+        let fetchOp = FetchImageOperation(media: media)
+        let cacheOp = BlockOperation {
+            if let image = fetchOp.image {
+                self.cache.cache(value: image, for: id)
+            }
+        }
+        let completionOp = BlockOperation {
+            defer {self.operations.removeValue(forKey:id)}
+            
+            if let currentIndexpath = self.tableView.indexPath(for: cell),
+                currentIndexpath != indexPath {
+                return
+            }
+            if let image = fetchOp.image {
+                cell.imageView?.image = image
+            }
+        }
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        imageFetchQueue.addOperation(fetchOp)
+        imageFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[id] = fetchOp
+    }
 
     // MARK: - Navigation
 
@@ -52,4 +89,11 @@ class MoviesTableViewController: UITableViewController {
     
     }
 
+}
+
+extension MoviesTableViewController {
+    
+    
+    
+    
 }

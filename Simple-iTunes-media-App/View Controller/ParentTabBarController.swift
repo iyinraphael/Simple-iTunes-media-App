@@ -15,7 +15,11 @@ class ParentTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Appearance.setTheme()
+        tabBar.barTintColor = .black
+        navigationItem.title = "iTunes"
+        tabBar.tintColor = .orange
+    
         let moviesTableViewController = MoviesTableViewController()
         moviesTableViewController.tabBarItem = UITabBarItem(title: "Movies", image: movieIcon, tag: 0)
         

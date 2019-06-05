@@ -15,7 +15,6 @@ class MusicViewController: UIViewController {
     
     
     //MARK: - Property
-    
     var reuseIdentifier = "MusicCollectionViewCell"
     var musicCollecViewController: UICollectionView!
     let mediaController = MediaController()
@@ -26,7 +25,7 @@ class MusicViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
+       
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,25 +38,18 @@ class MusicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.musicCollecViewController.dataSource = self
-        self.musicCollecViewController.delegate = self
+        musicCollecViewController.dataSource = self
+        musicCollecViewController.delegate = self
+        musicCollecViewController.register(MusicCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        
-        let musicCell = UINib(nibName: reuseIdentifier, bundle: nil)
-        self.musicCollecViewController.register(musicCell, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        mediaController.fetchMedia(mediaController.musicUrl) { (results, _) in
+        guard let url = mediaController.musicUrl else {return}
+        mediaController.fetchMedia(url) { (results, _) in
             DispatchQueue.main.async {
-               
                 self.musicCollecViewController.reloadData()
-
             }
         }
-        
         setupCollectView()
-
     }
-    
     
     func setupCollectView() {
         musicCollecViewController.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
@@ -65,69 +57,67 @@ class MusicViewController: UIViewController {
         musicCollecViewController.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         musicCollecViewController.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
-
-}
-
-
-extension MusicViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-        
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            
-            return mediaController.results.count
-        }
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MusicCollectionViewCell
-            
-            loadImage(forCell: cell, forItemAt: indexPath)
-            
-            return cell
-            
-}
     
-        //MARK: - Cache and Concurrency(NSOperation)
+    //MARK: - Cache and Concurrency(NSOperation)
     private func loadImage(forCell cell: MusicCollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let media = mediaController.results[indexPath.item]
+        
+        guard let id = Int(media.identifier) else {return}
+        if let cachedImage = cache.value(for: id as Int) {
+            cell.imageView.image = cachedImage
+            cell.artistLabel.text = media.artist
+            return
+        }
+        let fetchOp = FetchImageOperation(media: media)
+        let cacheOp = BlockOperation {
+            if let image = fetchOp.image {
+                self.cache.cache(value: image, for: id)
+            }
+        }
+        let completionOp = BlockOperation {
+            defer {self.operations.removeValue(forKey:id)}
             
-            let media = mediaController.results[indexPath.item]
-            
-            guard let id = Int(media.identifier) else {return}
-            if let cachedImage = cache.value(for: id as Int) {
-                cell.imageView.image = cachedImage
+            if let currentIndexpath = self.musicCollecViewController.indexPath(for: cell),
+                currentIndexpath != indexPath {
                 return
             }
-            let fetchOp = FetchImageOperation(media: media)
-            let cacheOp = BlockOperation {
+            
+            DispatchQueue.main.async {
                 if let image = fetchOp.image {
-                    self.cache.cache(value: image, for: id)
+                    cell.imageView.image = image
+                    cell.artistLabel.text = media.artist
                 }
+                self.musicCollecViewController.reloadData()
             }
-            let completionOp = BlockOperation {
-                defer {self.operations.removeValue(forKey:id)}
-                
-                if let currentIndexpath = self.musicCollecViewController.indexPath(for: cell),
-                    currentIndexpath != indexPath {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    if let image = fetchOp.image {
-                        cell.imageView.image = image
-                    }
-                    self.musicCollecViewController.reloadData()
-                }
-            }
-            
-            cacheOp.addDependency(fetchOp)
-            completionOp.addDependency(fetchOp)
-            
-            imageFetchQueue.addOperation(fetchOp)
-            imageFetchQueue.addOperation(cacheOp)
-            OperationQueue.main.addOperation(completionOp)
-            
-            operations[id] = fetchOp
         }
         
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
         
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        imageFetchQueue.addOperation(fetchOp)
+        imageFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[id] = fetchOp
+    }
+
+}
+
+
+extension MusicViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return mediaController.results.count
+        }
+    
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MusicCollectionViewCell else {return UICollectionViewCell()}
+            loadImage(forCell: cell, forItemAt: indexPath)
+            return cell
+        }
+    
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
             var totalUsableWidth = collectionView.frame.width
             let inset = self.collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: indexPath.section)

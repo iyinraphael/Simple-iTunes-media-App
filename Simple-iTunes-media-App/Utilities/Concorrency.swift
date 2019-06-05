@@ -44,7 +44,6 @@ class ConcurrentOperation: Operation {
     }
     
     // MARK: NSOperation
-    
     override dynamic var isReady: Bool {
         return super.isReady && state == .isReady
     }

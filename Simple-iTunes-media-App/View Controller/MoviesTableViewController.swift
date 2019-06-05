@@ -11,7 +11,6 @@ import UIKit
 class MoviesTableViewController: UITableViewController {
     
     //MARK: - Property
-    
     var reuseIdentifier = "tableCell"
     let mediaController = MediaController()
     private let cache = Cache<Int, UIImage>()
@@ -20,26 +19,27 @@ class MoviesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mediaController.fetchMedia(mediaController.movieUrl) { (_, _) in
+        darkMode()
+        Appearance.setTheme()
+        tableView.separatorStyle = .none
+        guard let url = mediaController.movieUrl else {return}
+        mediaController.fetchMedia(url) { (_, _) in
             DispatchQueue.main.sync {
                 self.tableView.reloadData()
             }
         }
-        
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
    
     
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return  mediaController.results.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MoviesTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? MoviesTableViewCell else {return UITableViewCell()}
         
         loadImage(forCell: cell, forItemAt: indexPath)
 
@@ -91,18 +91,6 @@ class MoviesTableViewController: UITableViewController {
     
             operations[id] = fetchOp
     }
-
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    
-    }
-
-}
-
-extension MoviesTableViewController {
-    
-    
-    
     
 }
+

@@ -9,9 +9,24 @@
 import UIKit
 
 
-class Appearance {
+enum Appearance {
     
+    static func setTheme() {
+        UITableViewCell.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+    }
 }
+
+
+extension UIViewController {
+    
+    func darkMode() {
+        view.backgroundColor = .black
+    }
+}
+
 
 extension UIView {
     

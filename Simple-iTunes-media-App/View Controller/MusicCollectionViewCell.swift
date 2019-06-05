@@ -15,34 +15,28 @@ class MusicCollectionViewCell: UICollectionViewCell {
         updateView()
     }
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
     let artistLabel: UILabel = {
         let artistLabel = UILabel()
+        artistLabel.translatesAutoresizingMaskIntoConstraints = false
+        artistLabel.frame = CGRect(x: 0, y: 125, width: 150, height: 15)
+        artistLabel.textAlignment = .center
+        artistLabel.textColor = .white
+        artistLabel.font.withSize(10)
         return artistLabel
     }()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.frame = CGRect(x: 0, y: 0, width: 150, height: 120)
         return imageView
     }()
     
+    
+    
     func updateView() {
-        addSubview(nameLabel)
         addSubview(artistLabel)
         addSubview(imageView)
-        
-        let stackView = UIStackView()
-        stackView.frame = CGRect(x: 10, y: 10, width: 150, height: 150)
-        stackView.axis = .vertical
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(nameLabel)
-        stackView.addArrangedSubview(artistLabel)
-        
-        
         
     }
     

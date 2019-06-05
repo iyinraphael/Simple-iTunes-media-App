@@ -9,36 +9,26 @@
 import Foundation
 
 struct Media: Codable {
-    
     let name: String
     let artist: String
     let image: String
     let mediaType: String
     let identifier: String
     
-    
     enum CodingKeys: String, CodingKey {
-
         case name = "name"
         case artist = "artistName"
         case image = "artworkUrl100"
         case mediaType = "kind"
         case identifier = "id"
-   
     }
-
 }
 
 
 struct Results: Decodable {
-    
     var feed: feeds
-    
-    
-    struct feeds: Decodable {
-        
-        var results: [Media]
-    
-    }
 
+    struct feeds: Decodable {
+        var results: [Media]
+    }
 }

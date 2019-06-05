@@ -14,23 +14,22 @@ class MoviesTableViewController: UITableViewController {
     
     var reuseIdentifier = "tableCell"
     let mediaController = MediaController()
-    var results: [Media] = []
     private let cache = Cache<Int, UIImage>()
     private var operations = [Int : Operation]()
     private let imageFetchQueue = OperationQueue()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        
         mediaController.fetchMedia(mediaController.movieUrl) { (_, _) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.sync {
                 self.tableView.reloadData()
             }
         }
+        
+        tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
+   
     
     // MARK: - Table view data source
 
@@ -40,7 +39,7 @@ class MoviesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? MoviesTableViewCell else {return UITableViewCell()}
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MoviesTableViewCell
         
         loadImage(forCell: cell, forItemAt: indexPath)
 
@@ -49,11 +48,14 @@ class MoviesTableViewController: UITableViewController {
     
     //MARK: - Cache and Concurrency(NSOperation)
     private func loadImage(forCell cell: MoviesTableViewCell, forItemAt indexPath: IndexPath) {
+        
         let media = mediaController.results[indexPath.item]
     
         guard let id = Int(media.identifier) else {return}
         if let cachedImage = cache.value(for: id as Int) {
             cell.movieImage.image = cachedImage
+            cell.artistLabel.text = media.artist
+            cell.nameLabel.text = media.name
             return
         }
         let fetchOp = FetchImageOperation(media: media)
@@ -69,18 +71,25 @@ class MoviesTableViewController: UITableViewController {
                 currentIndexpath != indexPath {
                 return
             }
-            if let image = fetchOp.image {
-                cell.imageView?.image = image
+            
+            DispatchQueue.main.async {
+                if let image = fetchOp.image {
+                    cell.movieImage.image = image
+                    cell.artistLabel.text = media.artist
+                    cell.nameLabel.text = media.name
+                }
+                self.tableView.reloadData()
             }
         }
-        cacheOp.addDependency(fetchOp)
-        completionOp.addDependency(fetchOp)
-        
-        imageFetchQueue.addOperation(fetchOp)
-        imageFetchQueue.addOperation(cacheOp)
-        OperationQueue.main.addOperation(completionOp)
-        
-        operations[id] = fetchOp
+            
+            cacheOp.addDependency(fetchOp)
+            completionOp.addDependency(fetchOp)
+            
+            imageFetchQueue.addOperation(fetchOp)
+            imageFetchQueue.addOperation(cacheOp)
+            OperationQueue.main.addOperation(completionOp)
+    
+            operations[id] = fetchOp
     }
 
     // MARK: - Navigation

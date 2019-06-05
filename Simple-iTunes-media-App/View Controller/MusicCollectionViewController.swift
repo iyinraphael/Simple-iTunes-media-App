@@ -10,82 +10,142 @@ import UIKit
 
 
 
-class MusicCollectionViewController: UICollectionViewController {
+class MusicViewController: UIViewController {
 
-    var reuseIdentifier = "collectionCell"
+    
+    
+    //MARK: - Property
+    
+    var reuseIdentifier = "MusicCollectionViewCell"
+    var musicCollecViewController: UICollectionView!
+    let mediaController = MediaController()
+    private let cache = Cache<Int, UIImage>()
+    private var operations = [Int : Operation]()
+    private let imageFetchQueue = OperationQueue()
+    let layout = UICollectionViewFlowLayout()
+    
+    override func loadView() {
+        super.loadView()
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.scrollDirection = .vertical
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
+        self.musicCollecViewController = collectionView
+
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.musicCollecViewController.dataSource = self
+        self.musicCollecViewController.delegate = self
+        
+        
+        let musicCell = UINib(nibName: reuseIdentifier, bundle: nil)
+        self.musicCollecViewController.register(musicCell, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        mediaController.fetchMedia(mediaController.musicUrl) { (results, _) in
+            DispatchQueue.main.async {
+               
+                self.musicCollecViewController.reloadData()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+            }
+        }
+        
+        setupCollectView()
 
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
-        // Configure the cell
     
-        return cell
+    func setupCollectView() {
+        musicCollecViewController.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        musicCollecViewController.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        musicCollecViewController.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        musicCollecViewController.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
+
+
+extension MusicViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            
+            return mediaController.results.count
+        }
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MusicCollectionViewCell
+            
+            loadImage(forCell: cell, forItemAt: indexPath)
+            
+            return cell
+            
+}
+    
+        //MARK: - Cache and Concurrency(NSOperation)
+    private func loadImage(forCell cell: MusicCollectionViewCell, forItemAt indexPath: IndexPath) {
+            
+            let media = mediaController.results[indexPath.item]
+            
+            guard let id = Int(media.identifier) else {return}
+            if let cachedImage = cache.value(for: id as Int) {
+                cell.imageView.image = cachedImage
+                return
+            }
+            let fetchOp = FetchImageOperation(media: media)
+            let cacheOp = BlockOperation {
+                if let image = fetchOp.image {
+                    self.cache.cache(value: image, for: id)
+                }
+            }
+            let completionOp = BlockOperation {
+                defer {self.operations.removeValue(forKey:id)}
+                
+                if let currentIndexpath = self.musicCollecViewController.indexPath(for: cell),
+                    currentIndexpath != indexPath {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    if let image = fetchOp.image {
+                        cell.imageView.image = image
+                    }
+                    self.musicCollecViewController.reloadData()
+                }
+            }
+            
+            cacheOp.addDependency(fetchOp)
+            completionOp.addDependency(fetchOp)
+            
+            imageFetchQueue.addOperation(fetchOp)
+            imageFetchQueue.addOperation(cacheOp)
+            OperationQueue.main.addOperation(completionOp)
+            
+            operations[id] = fetchOp
+        }
+        
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+            var totalUsableWidth = collectionView.frame.width
+            let inset = self.collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: indexPath.section)
+            totalUsableWidth -= inset.left + inset.right
+            
+            let minWidth: CGFloat = 150.0
+            let numberOfItemsInOneRow = Int(totalUsableWidth / minWidth)
+            totalUsableWidth -= CGFloat(numberOfItemsInOneRow - 1) * flowLayout.minimumInteritemSpacing
+            let width = totalUsableWidth / CGFloat(numberOfItemsInOneRow)
+            return CGSize(width: width, height: width)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 0, left: 10.0, bottom: 0, right: 10.0)
+        }
+    }
+
+
+
+
+

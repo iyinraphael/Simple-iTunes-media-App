@@ -19,7 +19,7 @@ extension UIView {
         var topInset = CGFloat(0)
         var bottomInset = CGFloat(0)
         
-        if #available(iOS 11, *), enableInsets {
+        if #available(iOS 12, *), enableInsets {
             let insets = self.safeAreaInsets
             topInset = insets.top
             bottomInset = insets.bottom

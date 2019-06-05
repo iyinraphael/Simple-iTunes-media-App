@@ -14,7 +14,6 @@
 		EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */; };
 		EB378D6122A4CAEF008B90F6 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */; };
 		EB378D6322A4CB82008B90F6 /* MusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */; };
-		EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */; };
 		EB378D6722A4CCBB008B90F6 /* ParentTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */; };
 		EB378D6922A4D709008B90F6 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6822A4D709008B90F6 /* Media.swift */; };
 		EB378D6B22A4DA57008B90F6 /* MediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D6A22A4DA57008B90F6 /* MediaController.swift */; };
@@ -23,6 +22,7 @@
 		EB378D7222A5E47F008B90F6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7122A5E47F008B90F6 /* Cache.swift */; };
 		EB378D7422A5E4DC008B90F6 /* Concorrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7322A5E4DC008B90F6 /* Concorrency.swift */; };
 		EB378D7622A5E648008B90F6 /* FetchImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7522A5E648008B90F6 /* FetchImageOperation.swift */; };
+		EB378D7D22A72225008B90F6 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB378D7B22A72225008B90F6 /* MusicCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,6 @@
 		EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
 		EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
 		EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewController.swift; sourceTree = "<group>"; };
-		EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTabBarController.swift; sourceTree = "<group>"; };
 		EB378D6822A4D709008B90F6 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		EB378D6A22A4DA57008B90F6 /* MediaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaController.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		EB378D7122A5E47F008B90F6 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		EB378D7322A5E4DC008B90F6 /* Concorrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concorrency.swift; sourceTree = "<group>"; };
 		EB378D7522A5E648008B90F6 /* FetchImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageOperation.swift; sourceTree = "<group>"; };
+		EB378D7B22A72225008B90F6 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +102,8 @@
 				EB378D5E22A4CAC1008B90F6 /* MoviesTableViewCell.swift */,
 				EB378D6022A4CAEF008B90F6 /* MoviesTableViewController.swift */,
 				EB378D6222A4CB82008B90F6 /* MusicCollectionViewController.swift */,
-				EB378D6422A4CBB8008B90F6 /* MusicCollectionViewCell.swift */,
 				EB378D6622A4CCBB008B90F6 /* ParentTabBarController.swift */,
+				EB378D7B22A72225008B90F6 /* MusicCollectionViewCell.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -209,10 +209,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB378D6122A4CAEF008B90F6 /* MoviesTableViewController.swift in Sources */,
-				EB378D6522A4CBB8008B90F6 /* MusicCollectionViewCell.swift in Sources */,
 				EB378D6922A4D709008B90F6 /* Media.swift in Sources */,
 				EB378D6D22A4DB0A008B90F6 /* Networking.swift in Sources */,
 				EB378D7222A5E47F008B90F6 /* Cache.swift in Sources */,
+				EB378D7D22A72225008B90F6 /* MusicCollectionViewCell.swift in Sources */,
 				EB378D7422A5E4DC008B90F6 /* Concorrency.swift in Sources */,
 				EB378D5F22A4CAC1008B90F6 /* MoviesTableViewCell.swift in Sources */,
 				EB378D7022A5D970008B90F6 /* Appearance.swift in Sources */,
